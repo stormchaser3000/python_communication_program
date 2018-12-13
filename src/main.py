@@ -16,10 +16,11 @@ while True:
 
         print("Please enter the ip address you would like to connect to\n:", end="")
         address = input()
+        spit_address = address.split(".")
         ip_addr = ()
-        for i in address:
+        for i in split_address:
             ip_addr.append(i)
-        c.connect(address, username)
+        c.connect(ip_addr, username)
 
         while True:
             message = input()
