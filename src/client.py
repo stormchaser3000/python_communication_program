@@ -10,3 +10,8 @@ class ChatClient():
     
     def send_message(self, username, message):
         self.client.sendall("{}: {}".format(username, message))
+    
+    def recv_message(self):
+        while True:
+            msg = self.recv()
+            print(msg.decode("ascii"))

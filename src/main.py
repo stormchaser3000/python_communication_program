@@ -19,7 +19,7 @@ while True:
         c.connect(address, username)
 
         while True:
-            message = input(":")
+            message = input()
             c.send_message(message, username)
 
 
@@ -28,7 +28,7 @@ while True:
 
         username = input("Please enter a username:")
         while True:
-            message = input(":")
+            message = input()
             s.send_message(message, username)
     else:
         print("Please enter c or j")

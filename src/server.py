@@ -16,3 +16,8 @@ class ChatServer(threading.Thread):
     
     def send_message(self, message, username):
         self.server.sendall("{}: {}".format(username, message))
+    
+    def recv_message(self):
+        while True:
+            msg = self.recv()
+            print(msg.decode("ascii"))
