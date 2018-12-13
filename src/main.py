@@ -18,6 +18,11 @@ while True:
             print("Please enter the ip address you would like to connect to\n:", end="")
             address = input()
             c.connect(address, username)
+        elif:
+            raise ValueError
+    except:
+        print("please enter c or j")
+        continue
 
 
 
