@@ -7,7 +7,6 @@ class ChatServer(threading.Thread):
         self.name = name
 
         self.server = socket.socket()
-        #self.host = socket.gethostbyname(socket.gethostname())
 
     def run(self):
         self.server.bind(('', 30000))
