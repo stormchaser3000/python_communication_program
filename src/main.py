@@ -1,38 +1,48 @@
 import threading, _thread
-import client, server
+import client, server, windows
+from tkinter import *
 
-#window = chat_window.ChatWindow()
+jc = windows.JoinOrCreate()
 
-while True:
-    print("Welcome to CypherChat")
-    print("Would you like to join or create a server? (j or c)")
-    option = input()
+# call the mainloop for the join or create window
+jc.window.mainloop()
 
-    if option == "j":
-        print("Please enter the username that you would like to use\n:", end="")
-        username = input()
+# start the chat window
+cw = windows.ChatWindow(jc.username, jc.ip_addr)
 
-        print("Please enter the ip address you would like to connect to\n:", end="")
-        address = input()
+# call the mainloop for the ChatWindow
+cw.window.mainloop()
 
-        c = client.ChatClient()
-        c.connect(address, username)
+#while True:
+#    print("Welcome to CypherChat")
+#    print("Would you like to join or create a server? (j or c)")
+#    option = input()
 
-        while True:
-            message = input()
-            c.send_message(message, username)
+#    if option == "j":
+#        print("Please enter the username that you would like to use\n:", end="")
+#        username = input()
+
+#        print("Please enter the ip address you would like to connect to\n:", end="")
+#        address = input()
+
+#        c = client.ChatClient()
+#        c.connect(address, username)
+
+#        while True:
+#            message = input()
+#            c.send_message(message, username)
 
 
-    elif option == "c":
-        s = server.ChatServer(threadID=1, name="Server")
-        s.start()
+#    elif option == "c":
+#        s = server.ChatServer(threadID=1, name="Server")
+#        s.start()
 
-        username = input("Please enter a username:")
-        while True:
-            message = input()
-            s.send_message(message, username)
-    else:
-        print("Please enter c or j")
+#        username = input("Please enter a username:")
+#        while True:
+#            message = input()
+#            s.send_message(message, username)
+#    else:
+#        print("Please enter c or j")
 
 
 
