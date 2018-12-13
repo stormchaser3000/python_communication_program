@@ -9,14 +9,13 @@ while True:
     option = input()
 
     if option == "j":
-        c = client.ChatClient()
-
         print("Please enter the username that you would like to use\n:", end="")
         username = input()
 
         print("Please enter the ip address you would like to connect to\n:", end="")
         address = input()
 
+        c = client.ChatClient(username, address)
         c.connect(address, username)
 
         while True:

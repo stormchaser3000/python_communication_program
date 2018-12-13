@@ -1,12 +1,15 @@
 import socket
 
-class ChatClient():
-    def __init__(self):
+class ChatClient(threading.Thread):
+    def __init__(self, username, address):
+        threading.Thread.__init__(self)
         self.client = socket.socket()
+        self.username = username
+        self.address = address
     
-    def connect(self, address, username):
-        self.client.connect((address, 30000))
-        connected_message = "{} connected".format(username)
+    def run(self):
+        self.client.connect((self.address, 30000))
+        connected_message = "{} connected".format(self.username)
         self.client.sendall(connected_message.encode("UTF-8"))
     
     def send_message(self, username, message):

@@ -12,9 +12,9 @@ class ChatServer(threading.Thread):
     def run(self):
         self.server.bind(('', 30000))
         self.server.listen(5)
-        self.server.accept()
         while True:
-            print(self.server.recv(1024).decode('UTF-8'))
+            connection, addr = self.server.accept()
+            print(connection.recv(1024).decode('UTF-8'))
     
     def send_message(self, message, username):
         self.server.sendall("{}: {}".format(username, message))
