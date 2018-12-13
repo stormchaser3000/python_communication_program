@@ -1,4 +1,4 @@
-import socket
+import socket, threading
 
 class ChatClient(threading.Thread):
     def __init__(self, username, address):
