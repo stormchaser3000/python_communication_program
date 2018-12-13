@@ -13,11 +13,8 @@ class ChatServer(threading.Thread):
         self.server.bind((socket.gethostname(), port))
         self.server.listen()
         self.server.accept()
+        while True:
+            print(self.server.recv(1024))
     
     def send_message(self, message, username):
         self.server.sendall("{}: {}".format(username, message))
-    
-    def recv_message(self):
-        while True:
-            msg = self.recv()
-            print(msg.decode("ascii"))

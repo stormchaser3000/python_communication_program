@@ -26,11 +26,9 @@ while True:
 
     elif option == "c":
         s = server.ChatServer(threadID=1, name="Server")
-        s.start_server(30000)
+        _thread.start_new_thread(s.start_server, (30000, ))
 
         username = input("Please enter a username:")
-
-        s.recv_message()
         while True:
             message = input()
             s.send_message(message, username)

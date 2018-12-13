@@ -5,7 +5,7 @@ class ChatClient():
         self.client = socket.socket()
     
     def connect(self, address, username):
-        self.client.connect(address)
+        self.client.connect((address, 30000))
         self.client.sendall("{} connected".format(username))
     
     def send_message(self, username, message):
