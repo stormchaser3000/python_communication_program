@@ -1,8 +1,11 @@
 import socket, threading
 
 class ChatClient(threading.Thread):
-    def __init__(self, username, address):
+    def __init__(self, threadID, name, username, address):
         threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+
         self.client = socket.socket()
         self.username = username
         self.address = address
