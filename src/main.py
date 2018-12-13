@@ -1,4 +1,4 @@
-import threading
+import threading, _thread
 import client, server
 
 #window = chat_window.ChatWindow()
@@ -16,6 +16,9 @@ while True:
 
         print("Please enter the ip address you would like to connect to\n:", end="")
         address = input()
+        ip_addr = ()
+        for i in address:
+            ip_addr.append(i)
         c.connect(address, username)
 
         while True:
@@ -27,6 +30,8 @@ while True:
         s = server.ChatServer(threadID=1, name="Server")
 
         username = input("Please enter a username:")
+
+        _thread.start_new_thread(s.recv_message)
         while True:
             message = input()
             s.send_message(message, username)
