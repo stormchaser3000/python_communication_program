@@ -16,11 +16,8 @@ while True:
 
         print("Please enter the ip address you would like to connect to\n:", end="")
         address = input()
-        spit_address = address.split(".")
-        ip_addr = ()
-        for i in split_address:
-            ip_addr.append(i)
-        c.connect(ip_addr, username)
+
+        c.connect(address, username)
 
         while True:
             message = input()
@@ -29,10 +26,11 @@ while True:
 
     elif option == "c":
         s = server.ChatServer(threadID=1, name="Server")
+        s.start_server(30000)
 
         username = input("Please enter a username:")
 
-        _thread.start_new_thread(s.recv_message)
+        s.recv_message()
         while True:
             message = input()
             s.send_message(message, username)

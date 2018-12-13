@@ -7,10 +7,10 @@ class ChatServer(threading.Thread):
         self.name = name
 
         self.server = socket.socket()
-        self.host = socket.gethostbyname(socket.gethostname())
+        #self.host = socket.gethostbyname(socket.gethostname())
 
     def start_server(self, port):
-        self.server.bind(self.host, port)
+        self.server.bind((socket.gethostname(), port))
         self.server.listen()
         self.server.accept()
     
