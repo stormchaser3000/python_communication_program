@@ -16,7 +16,6 @@ while True:
         address = input()
 
         c = client.ChatClient(username, address)
-        c.connect(address, username)
 
         while True:
             message = input()
