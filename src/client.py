@@ -6,7 +6,8 @@ class ChatClient():
     
     def connect(self, address, username):
         self.client.connect((address, 30000))
-        self.client.sendall("{} connected".format(username))
+        connected_message = "{} connected".format(username)
+        self.client.sendall(connected_message.encode("UTF-8"))
     
     def send_message(self, username, message):
         msg = "{}: {}".format(username, message)
