@@ -9,7 +9,8 @@ class ChatClient():
         self.client.sendall("{} connected".format(username))
     
     def send_message(self, username, message):
-        self.client.sendall("{}: {}".format(username, message).encode('UTF-8'))
+        msg = "{}: {}".format(username, message)
+        self.client.sendall(msg.encode('UTF-8'))
     
     def recv_message(self):
         while True:
