@@ -15,7 +15,7 @@ while True:
         print("Please enter the ip address you would like to connect to\n:", end="")
         address = input()
 
-        c = client.ChatClient(username, address)
+        c = client.ChatClient(1, "Client", username, address)
 
         while True:
             message = input()
