@@ -1,5 +1,6 @@
 from tkinter import *
-import client, server, _thread
+import client, os, server, socket
+from threading import Thread
 
 class JoinOrCreate():
     def __init__(self):
@@ -131,14 +132,6 @@ class ChatWindow():
         self.window.geometry("700x400+{:.0f}+{:.0f}".format((self.window.winfo_screenwidth() / 2), (self.window.winfo_screenheight() / 2)))
         self.window.resizable(width=False, height=False)
 
-        self.frame_left = Frame(self.window, width=20)
-        self.frame_left.pack(side=LEFT, fill=Y, expand=True)
-
-        # create the user list
-        self.user_list = Listbox(self.frame_left, width=20, selectmode=EXTENDED)
-        self.user_list.pack(side=LEFT, fill=Y, expand=True)
-        self.user_list.insert(0, self.username)
-
         # create the frame to put the message box and message entry into
         self.frame_right = Frame(self.window)
         self.frame_right.pack(side=RIGHT, fill=BOTH, expand=True)
@@ -164,13 +157,19 @@ class ChatWindow():
 
         # connect to server if join is True or start one if False
         if join == True:
-            self.cli = client.ChatClient(self.username, self.address)
-            _thread.start_new_thread(self.cli.recieve_message, (self.message_box, ))
+            self.client = sock.create_connection((self.address, 30000))
+            self.handling = Thread(target=connection_handling, args=(self.client, ))
         elif join == False:
-            self.serv = server.start_server()
-            _thread.start_new_thread(server.accept_connection,(self.message_box, self.serv))
+            self.server_process = Thread(target=server.start_server)
+            self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.client.connect(("localhost", 30000))
+            self.handling = Thread(target=connection_handling, args=(self.client, ))
+
     def send_message(self, message, username):
-        if join == True:
-            self.cli.send_message(username, message)
-        else:
-            server.send_message(self.serv, message, username)
+        msg = "{}: {}".format(username, message)
+        self.client.sendall(msg.encode("utf-8"))
+
+    def connection_handling(self, connect):
+        while True:
+            info = connect.recv(2048)
+            self.message_box.insert(END, info.decode("utf-8"))
