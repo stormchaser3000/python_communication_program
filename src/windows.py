@@ -164,14 +164,13 @@ class ChatWindow():
 
         # connect to server if join is True or start one if False
         if join == True:
-            cli = client.ChatClient(self.username, self.address)
-            def send_message(self, m, u):
-                cli.send_message(u, m)
-            while True:
-                msg = cli.client.recv(1024)
-                self.message_box.insert(END, msg)
+            self.cli = client.ChatClient(self.username, self.address)
+            _thread.start_new_thread(cli.recieve_message, (self.message_box, ))
         elif join == False:
             self.serv = server.start_server()
             _thread.start_new_thread(server.accept_connection,(self.message_box, self.serv))
-            def send_message(self, m, u):
-                server.send_message(self.serv, u, m)
+    def send_message(self, message, username):
+        if join == True:
+            self.cli.send_message(username, message)
+        else:
+            server.send_message(self.serv, message, username)
