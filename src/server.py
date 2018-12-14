@@ -1,19 +1,22 @@
-import socket, threading
+import socket, _thread, selectors
+# multithreading was not discussed in my programming class (this is here to indicate
+# where a concept that was not taught in the class was used)
+def start_server():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(("localhost", 30000))
+    server.setblocking(True)
+    server.listen()
+    return server
 
-class ChatServer(threading.Thread):
-    def __init__(self, threadID, name):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.name = name
+def connection(connect, textbox):
+    while True:
+        msg = connect.recv(1024).decode("UTF-8")
+        textbox.insert(END, msg)
 
-        self.server = socket.socket()
+def accept_connection(textbox, server):
+    while True:
+        connect, ip_addr = server.accept()
+        _thread.start_new_thread(connection, (connect, textbox))
 
-    def run(self):
-        self.server.bind(('', 30000))
-        self.server.listen(5)
-        while True:
-            connection, addr = self.server.accept()
-            print(connection.recv(1024).decode('UTF-8'))
-    
-    def send_message(self, message, username):
-        self.server.sendall("{}: {}".format(username, message))
+def send_message(server, message, username):
+    server.sendall("{}: {}".format(username, message))

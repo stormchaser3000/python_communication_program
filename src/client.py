@@ -1,19 +1,13 @@
 import socket
 
 class ChatClient():
-    def __init__(self):
+    def __init__(self, username, address):
         self.client = socket.socket()
-    
-    def connect(self, address, username):
         self.client.connect((address, 30000))
-        connected_message = "{} connected".format(username)
+        connected_message = "{} connected\n".format(username)
         self.client.send(connected_message.encode("UTF-8"))
     
     def send_message(self, username, message):
-        msg = "{}: {}".format(username, message)
+        msg = "{}: {}\n".format(username, message)
         self.client.send(msg.encode('UTF-8'))
-    
-    def recv_message(self):
-        while True:
-            msg = self.recv()
-            print(msg.decode("ascii"))
+        

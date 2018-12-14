@@ -8,7 +8,7 @@ jc = windows.JoinOrCreate()
 jc.window.mainloop()
 
 # start the chat window
-cw = windows.ChatWindow(jc.username, jc.ip_addr)
+cw = windows.ChatWindow(jc.username, jc.ip_addr, jc.join)
 
 # call the mainloop for the ChatWindow
 cw.window.mainloop()

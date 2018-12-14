@@ -1,5 +1,5 @@
 from tkinter import *
-import client, server
+import client, server, _thread
 
 class JoinOrCreate():
     def __init__(self):
@@ -121,7 +121,7 @@ class JoinOrCreate():
         self.window.destroy()
 
 class ChatWindow():
-    def __init__(self, username, ip_addr):
+    def __init__(self, username, ip_addr, join):
         # store the username and ip address
         self.username = username
         self.address = ip_addr
@@ -158,3 +158,20 @@ class ChatWindow():
         # create the place to enter chat messages into
         self.message_entry = Entry(self.frame_right_bottom)
         self.message_entry.pack(side=BOTTOM, fill=X, expand=True, pady=0, ipady=1)
+
+        self.send_button = Button(self.frame_right_bottom, text="Send", command=lambda: self.send_message(self.message_entry.get(), self.username))
+        self.send_button.pack(side=RIGHT)
+
+        # connect to server if join is True or start one if False
+        if join == True:
+            cli = client.ChatClient(self.username, self.address)
+            def send_message(self, m, u):
+                cli.send_message(u, m)
+            while True:
+                msg = client.client.recv(1024)
+                self.message_box.insert(END, msg)
+        elif join == False:
+            self.serv = server.start_server()
+            _thread.start_new_thread(server.accept_connection,(self.message_box, self.serv))
+            def send_message(self, m, u):
+                server.send_message(self.serv, u, m)
