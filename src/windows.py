@@ -168,7 +168,7 @@ class ChatWindow():
             def send_message(self, m, u):
                 cli.send_message(u, m)
             while True:
-                msg = client.client.recv(1024)
+                msg = cli.client.recv(1024)
                 self.message_box.insert(END, msg)
         elif join == False:
             self.serv = server.start_server()
