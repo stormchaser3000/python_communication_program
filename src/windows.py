@@ -157,7 +157,7 @@ class ChatWindow():
 
         # connect to server if join is True or start one if False
         if join == True:
-            self.client = sock.create_connection((self.address, 30000))
+            self.client = socket.create_connection((self.address, 30000))
             self.handling = Thread(target=self.connection_handling, args=(self.client, ))
             self.handling.start()
         elif join == False:

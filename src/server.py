@@ -14,7 +14,7 @@ def send_to_others(msg, conn):
 
 def connection_handling(serv, addr):
     while True:
-        info = serv.recv().decode("utf-8")
+        info = serv.recv(2048).decode("utf-8")
 
         send_to_others(info, serv)
 
@@ -23,7 +23,7 @@ def start_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(("0.0.0.0", 30000))
     print("Bound socket to 0.0.0.0")
-    server.setblocking(False)
+    server.setblocking(True)
     server.listen()
     print("server is listening")
     while True:
