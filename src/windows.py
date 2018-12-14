@@ -158,12 +158,15 @@ class ChatWindow():
         # connect to server if join is True or start one if False
         if join == True:
             self.client = sock.create_connection((self.address, 30000))
-            self.handling = Thread(target=connection_handling, args=(self.client, ))
+            self.handling = Thread(target=self.connection_handling, args=(self.client, ))
+            self.handling.start()
         elif join == False:
             self.server_process = Thread(target=server.start_server)
+            self.server_process.start()
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.client.connect(("localhost", 30000))
-            self.handling = Thread(target=connection_handling, args=(self.client, ))
+            self.handling = Thread(target=self.connection_handling, args=(self.client, ))
+            self.handling.start()
 
     def send_message(self, message, username):
         msg = "{}: {}".format(username, message)
@@ -171,5 +174,8 @@ class ChatWindow():
 
     def connection_handling(self, connect):
         while True:
-            info = connect.recv(2048)
-            self.message_box.insert(END, info.decode("utf-8"))
+            try:
+                info = connect.recv(2048)
+                self.message_box.insert(END, info.decode("utf-8"))
+            except ConnectionResetError:
+                print("ERROR: connection reset")

@@ -22,9 +22,12 @@ def connection_handling(serv, addr):
 def start_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(("0.0.0.0", 30000))
+    print("Bound socket to 0.0.0.0")
     server.setblocking(False)
     server.listen()
+    print("server is listening")
     while True:
         connect, ip_addr = server.accept()
+        print("Connected to:", ip_addr)
         connected_list.append(connect)
         _thread.start_new_thread(connection_handling, (connect, ip_addr))
