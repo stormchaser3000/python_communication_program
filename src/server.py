@@ -4,7 +4,7 @@ from tkinter import *
 connected_list = []
 
 def send_to_others(msg, conn):
-    for connenected in connected_list:
+    for connected in connected_list:
         if connected != conn:
             try:
                 connected.send(msg)
