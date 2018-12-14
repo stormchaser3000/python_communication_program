@@ -3,7 +3,7 @@ import socket, _thread, selectors
 # where a concept that was not taught in the class was used)
 def start_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(("localhost", 30000))
+    server.bind(("", 30000))
     server.setblocking(True)
     server.listen()
     return server
